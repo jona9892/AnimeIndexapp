@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="animeindex">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Controller.Activities.Anime.AnimeSearchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Controller.Activities.Anime.AnimeInfoActivity" />
+        <activity android:name=".Controller.Activities.Animelist.AnimelistActivity" android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
+
+        <activity android:name=".Controller.Activities.Animelist.AnimelistEditActivity" />
+        <activity android:name=".Controller.Activities.Picture.PictureActivity" />
+        <activity android:name=".Controller.Activities.Picture.FullscreenActivity" />
+        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistTabActivity" />
+        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistCompleted" />
+        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistWatching" />
+        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistDropped" />
+
+        <activity android:name=".Controller.Activities.Anime.SearchActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+
+        </activity>
+    </application>
+
+</manifest>

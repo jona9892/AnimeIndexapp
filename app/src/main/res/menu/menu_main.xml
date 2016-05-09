@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sort"
+        android:title="Title"
+        android:icon="@mipmap/sprt"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menuItemAnimelist"
+        android:title="Animelist"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/menuItemAnimeSearch"
+        android:title="Search Anime"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/menuItemAlbum"
+        android:title="Anime album"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/searchActionBarItem"
+        android:icon="@mipmap/search"
+        android:title="Search anime"
+        app:showAsAction="ifRoom"
+        />
+
+
+
+    <item android:id="@+id/action_close"
+        android:title="Exit"
+        app:showAsAction="never" />
+
+
+</menu>

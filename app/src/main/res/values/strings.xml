@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AnimeIndex</string>
+    <string name="title_activity_anime__search_">Anime_Search_Activity</string>
+    <string name="search_hint">Search anime</string>
+</resources>
