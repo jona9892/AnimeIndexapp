@@ -79,6 +79,9 @@ public class FullscreenActivity extends AppCompatActivity {
         setResult(RESULT_OK);
     }
 
+    /**
+     * This method gets the data from previous activty, and sets it to a picture object.
+     */
     public void getFromIntent(){
         m_picture = (Picture) getIntent().getSerializableExtra(PictureActivity.FULLSCREEN_TAG);
     }
@@ -96,6 +99,9 @@ public class FullscreenActivity extends AppCompatActivity {
         txtFSDescription.setText(""+m_picture.getDescription());
     }
 
+    /**
+     * This method set up the listeners for the buttons, and also alertdialog for the deletion.
+     */
     public void setUpButtons(){
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +132,9 @@ public class FullscreenActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method sets up the listeners for the textviews.
+     */
     public void setUpTextViews(){
         txtFSTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +150,10 @@ public class FullscreenActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method makes it possible for the user to edit the description of picture
+     * It will open a alertdialog where the user can enter text.
+     */
     private void editDescription() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit description");
@@ -149,6 +162,7 @@ public class FullscreenActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
         // Specify the type of input expected
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(m_picture.getDescription());
         builder.setView(input);
 
         // Set up the buttons
@@ -174,6 +188,10 @@ public class FullscreenActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * This method makes it possible for the user to edit the title of picture
+     * It will open a alertdialog where the user can enter text.
+     */
     private void editTitle() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit title");
@@ -182,6 +200,7 @@ public class FullscreenActivity extends AppCompatActivity {
         final EditText input = new EditText(this);
         // Specify the type of input expected
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(m_picture.getTitle());
         builder.setView(input);
 
         // Set up the buttons
@@ -207,6 +226,11 @@ public class FullscreenActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * This method will take the file and set it to a imageview, while scaling, set rotation and color of picture.
+     * @param filename the file
+     * @param myImage the imageview
+     */
     private void showInFullscreen(String filename, ImageView myImage) {
 
         File f = new File(filename);
@@ -216,14 +240,6 @@ public class FullscreenActivity extends AppCompatActivity {
         myImage.setImageURI(Uri.fromFile(f));
         myImage.setBackgroundColor(Color.WHITE);
         myImage.setRotation(90);
-        scaleImage(myImage);
-    }
-
-    //This will scale the image
-    private void scaleImage(ImageView myImage)
-    {
         myImage.setScaleType(ImageView.ScaleType.FIT_XY);
     }
-
-
 }
