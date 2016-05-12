@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,22 +24,34 @@ public class AnimeRepository {
 
     private final String TAG = "AnimeIndex-animes";
 
-    ArrayList<Anime> m_animes;
-
+    ArrayList<Anime> animeArray;
+    private int m_limit = 10;
     public AnimeRepository(){
-        m_animes = new ArrayList<Anime>();
+        animeArray = new ArrayList<Anime>();
     }
 
-    public void loadAllAnimes()
-    {
+    /**
+     * This method returns an arraylist of anime objects.
+     * It gets the url by string and concerts the string to a JSONobject. And then get the array of this JSONObject that is wraped in "docs"
+     * Then for every JSONobject in this array it will get this JSONobejct and get the value for each properties and set it the a new Anime object.
+     * @param idx
+     * @return
+     */
+    public ArrayList<Anime> getPage(int idx) {
         try {
-            String result = getContent(URL);
+            String url = URL + "?" + "limit=" + m_limit + "&page=" + idx;
+            String result = getContent(url);
 
-            if (result == null) return;
+            if (result == null)
+            {
+                Log.d(TAG, "Nothing returned...");
+                return null;
+            }
 
+            JSONObject object = new JSONObject(result);
 
-            JSONArray array = new JSONArray(result);
-
+            JSONArray array = object.getJSONArray("docs");
+            ArrayList<Anime> res = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 JSONObject o = array.getJSONObject(i);
 
@@ -66,9 +79,15 @@ public class AnimeRepository {
                 String airdate = o.getString("airdate");
                 String enddate = o.getString("enddate");
 
-                Anime a = new Anime(title, type, status, description, m_genres, image, episodeCount, airdate, enddate);
-                m_animes.add(a);
+                Anime a = new Anime(title, type, status, description, m_genres ,image, episodeCount, airdate, enddate);
+               res.add(a);
             }
+            //I do this because everytime this method gets called, it removes the objects, so it doesn't get the right position
+            animeArray.addAll(res);
+            Log.d("Repository:", "amount in array" + res.size());
+            Log.d("Repository:", "amount in array" + animeArray.size());
+            return res;
+
 
         } catch (JSONException e) {
             Log.e(TAG,
@@ -76,11 +95,16 @@ public class AnimeRepository {
         } catch (Exception e)
         {  Log.d(TAG, "General exception in loadAll " + e.getMessage());
         }
+        return null;
     }
 
-    public ArrayList<Anime> getAll()
-    { return m_animes; }
-
+    /**
+     * This method return an arraylist containing all anime objects.
+     * @return
+     */
+    public ArrayList<Anime> getAll(){
+        return animeArray;
+    }
 
     /**
      * Get the content of the url as a string. Based on using a scanner.

@@ -29,8 +29,8 @@ public class AnimesLoadTask extends AsyncTask<
 
     @Override
     protected ArrayList<Anime> doInBackground(AnimeRepository... params) {
-        params[0].loadAllAnimes();
-        return params[0].getAll();
+       // params[0].getPage(1);
+        return null;
 
     }
 
@@ -38,6 +38,6 @@ public class AnimesLoadTask extends AsyncTask<
     // this method is invoked by the GUI thread
     @Override
     protected void onPostExecute(final ArrayList<Anime> animes) {
-        m_context.initializeData(animes);
+        //m_context.initializeData(animes);
     }
 }
