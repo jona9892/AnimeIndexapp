@@ -18,5 +18,4 @@ public class ViewHolderAnimelist {
     TextView txtAnimelistEpisodeCount;
     TextView txtAnimelistRating;
     ImageView imgAnimelistImage;
-    ImageLoadTask ilt;
 }

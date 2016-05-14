@@ -13,6 +13,8 @@ package animeindex.Controller.Activities.Animelist;
         import android.widget.Spinner;
         import android.widget.TextView;
 
+        import com.squareup.picasso.Picasso;
+
         import java.util.ArrayList;
 
         import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistCompleted;
@@ -92,7 +94,8 @@ public class AnimelistEditActivity extends AppCompatActivity {
         txtAnimeEditTitle.setText(m_animelist.getTitle());
 
         imgEditImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        new ImageLoadTask(m_animelist.getImage(), imgEditImage).execute();
+        //new ImageLoadTask(m_animelist.getImage(), imgEditImage).execute();
+        Picasso.with(this).load(m_animelist.getImage()).into(imgEditImage);
 
     }
 

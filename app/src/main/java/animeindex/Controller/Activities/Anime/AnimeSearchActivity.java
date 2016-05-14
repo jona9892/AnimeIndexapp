@@ -1,14 +1,11 @@
 package animeindex.Controller.Activities.Anime;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,24 +18,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import animeindex.Controller.Activities.Animelist.AnimelistActivity;
 import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistTabActivity;
-import animeindex.Controller.Activities.Comparator.AnimeTitleComparator;
 import animeindex.Controller.Activities.Picture.PictureActivity;
-import animeindex.Controller.AsyncTasks.ImageLoadTask;
-import animeindex.Controller.AsyncTasks.AnimesLoadTask;
-import animeindex.Model.Genre;
+import animeindex.DAL.ServiceGateway.Abstraction.IGateway;
 import animeindex.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import animeindex.DAL.Repositories.AnimeRepository;
+import animeindex.DAL.ServiceGateway.Implementation.AnimeGateway;
 import animeindex.Model.Anime;
 
 public class AnimeSearchActivity extends AppCompatActivity {
@@ -46,11 +38,9 @@ public class AnimeSearchActivity extends AppCompatActivity {
 
     private AnimeAdapter animeAdapter;
     private ListView lstAnimes;
-    private SearchView searchView;
-    private ArrayList<Anime> animeArray;
     private Boolean reverse = true;
     public static String ANIMESEARCH_TAG = "ANIME";
-    AnimeRepository m_data;
+    IGateway m_data;
 
 
     int nextPage = 1;
@@ -62,7 +52,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anime_search);
         getWidgets();
         setAdapter();
-        m_data = new AnimeRepository();
+        m_data = new AnimeGateway();
         setUpListViews();
 
     }
@@ -87,12 +77,6 @@ public class AnimeSearchActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.sort)
-        {
-            titleSort();
-            return true;
-        }
         if(id == R.id.menuItemAnimelist){
             Intent intent = new Intent();
             intent.setClass(this, AnimelistActivity.class);
@@ -123,33 +107,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
             System.exit(0);
         }
 
-        if(id == R.id.searchActionBarItem){
-            Intent searchIntent = new Intent(this, SearchActivity.class);
-            searchIntent.putExtra(ANIMESEARCH_TAG, animeArray);
-            startActivity(searchIntent);
-        }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * This method will sort an array using a comparator, and sort either asc or desc
-     */
-    private void titleSort() {
-        AnimeTitleComparator animeComparator = new AnimeTitleComparator();
-
-        if(reverse){
-            Collections.sort(animeArray, animeComparator);
-            setAdapter();
-            reverse = false;
-        }else {
-            Collections.sort(animeArray, Collections.reverseOrder(animeComparator));
-            setAdapter();
-            reverse = true;
-        }
-
-        Log.d("ANIMELIST_TAG", "" + animeArray.get(0).getTitle());
-
     }
 
     /**
@@ -175,7 +133,6 @@ public class AnimeSearchActivity extends AppCompatActivity {
                 boolean loadMore =
                         firstVisibleItem + visibleItemCount >= totalItemCount;
 
-                //If we are at bottom at the page and not loading, load more data
                 if(loadMore && !loading) {
                     Log.d("AnimeSearch", "onScroll page to load = " + nextPage);
                     new LoadDataTask().execute(nextPage);
@@ -198,10 +155,10 @@ public class AnimeSearchActivity extends AppCompatActivity {
     /**
      * This method is called when th user clicks on an anime
      * It will start a new intent with the positions of the anime objects in the array
-     * @param parent d
-     * @param v d
-     * @param position d
-     * @param id d
+     * @param parent the listview
+     * @param v the view
+     * @param position the position
+     * @param id the id
      */
     public void onClick(ListView parent,
                         View v, int position, long id) {
@@ -287,11 +244,16 @@ public class AnimeSearchActivity extends AppCompatActivity {
 
     /**
      * This class takes care of getting the data from the api, and be able to display the data
+     * It needs three generic types: The Integer is the type of the parameter sen to the task when executed
+     * The void is void because that is unused. It would be fx Integer if the progress needs to be specified
+     * The List<Anime> is the result of the doInBackground.
+     *
      */
     class LoadDataTask extends AsyncTask<Integer, Void, List<Anime>> {
 
         /**
          * This method will return a List of Anime getting the data from api
+         * Use this for operations that takes some time, fx gets a lot of data
          * @param page the page of api
          * @return list
          */
@@ -306,9 +268,8 @@ public class AnimeSearchActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(List<Anime> animes) {
-            animeArray = (ArrayList<Anime>) animes;
             Log.d("Repo", ""+animes.size());
-            animeAdapter.addAll(animeArray);
+            animeAdapter.addAll(animes);
             loading = false;
         }
     }

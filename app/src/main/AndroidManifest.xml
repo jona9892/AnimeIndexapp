@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Controller.Activities.Anime.AnimeInfoActivity" />
+
         <activity android:name=".Controller.Activities.Animelist.AnimelistActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -41,15 +42,6 @@
         <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistWatching" />
         <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistDropped" />
 
-        <activity android:name=".Controller.Activities.Anime.SearchActivity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
-
-        </activity>
     </application>
 
 </manifest>

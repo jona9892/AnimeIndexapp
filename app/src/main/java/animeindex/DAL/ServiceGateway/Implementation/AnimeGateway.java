@@ -1,4 +1,4 @@
-package animeindex.DAL.Repositories;
+package animeindex.DAL.ServiceGateway.Implementation;
 
 import android.util.Log;
 
@@ -7,26 +7,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import animeindex.DAL.ServiceGateway.Abstraction.IGateway;
 import animeindex.Model.Anime;
 import animeindex.Model.Genre;
 
 /**
  * Created by jona9892 on 09-04-2016.
  */
-public class AnimeRepository {
-    private final String URL = "http://192.168.0.19:9000/api/animes";
+public class AnimeGateway implements IGateway<Anime> {
 
     private final String TAG = "AnimeIndex-animes";
 
     ArrayList<Anime> animeArray;
     private int m_limit = 10;
-    public AnimeRepository(){
+    public AnimeGateway(){
         animeArray = new ArrayList<Anime>();
     }
 
@@ -39,6 +38,8 @@ public class AnimeRepository {
      */
     public ArrayList<Anime> getPage(int idx) {
         try {
+            String URL = "http://192.168.0.19:9000/api/animes";
+
             String url = URL + "?" + "limit=" + m_limit + "&page=" + idx;
             String result = getContent(url);
 
@@ -115,7 +116,6 @@ public class AnimeRepository {
     {
         StringBuilder sb = new StringBuilder();
         try {
-
 
             java.net.URL url = new URL(urlString);
             Scanner s = new Scanner(url.openStream());

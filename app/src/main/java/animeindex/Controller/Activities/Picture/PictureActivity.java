@@ -42,10 +42,10 @@ import animeindex.R;
 
 public class PictureActivity extends AppCompatActivity {
 
-    PictureAdapter pictureAdapter;
+    private PictureAdapter pictureAdapter;
     private ICrud<Picture> pictureDb;
-    GridView grdPictures;
-    ImageButton btnPicture;
+    private GridView grdPictures;
+    private ImageButton btnPicture;
 
 
     private final int CAMERA_REQUEST_CODE = 0;
@@ -53,13 +53,11 @@ public class PictureActivity extends AppCompatActivity {
     public static String TAG = "PICTURE_ACTIVITY";
     public static String FULLSCREEN_TAG = "FULLSCREEN";
 
-
-
-    String timeStamp;
-    String title;
-    File file;
-    String filename;
-    String description;
+    private String timeStamp;
+    private String title;
+    private File file;
+    private String filename;
+    private String description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

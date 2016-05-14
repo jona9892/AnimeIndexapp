@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import animeindex.Controller.AsyncTasks.ImageLoadTask;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCAnimelist;
@@ -167,7 +169,10 @@ public class AnimeInfoActivity extends AppCompatActivity {
         txtInfoDescription.setText(m_anime.getDescription() != null ? m_anime.getDescription().toString() : "");
         txtInfoStartdate.setText(m_anime.getAirdate() != null ? m_anime.getAirdate().toString() : "");
         txtInfoEnddate.setText(m_anime.getEnddate() != null ? m_anime.getEnddate().toString() : "");
-        new ImageLoadTask(m_anime.getImage(), imgInfoImage).execute();
+
+        //new ImageLoadTask(m_anime.getImage(), imgInfoImage).execute();
+
+        Picasso.with(this).load(m_anime.getImage()).into(imgInfoImage);
 
         //Dynamically add new textview for every genre in anime object
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

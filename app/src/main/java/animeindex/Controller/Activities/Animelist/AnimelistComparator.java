@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Comparator;
+package animeindex.Controller.Activities.Animelist;
 
 import java.util.Comparator;
 

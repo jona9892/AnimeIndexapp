@@ -111,8 +111,6 @@ public class AnimelistAdapter extends ArrayAdapter<Animelist> implements Filtera
         holder.txtAnimelistRating.setText(""+ " "+animelist.getRating());
         int pos = position+1;
         holder.txtNumber.setText(""+ " "+pos+" ");
-        //holder.ilt = new ImageLoadTask(animelist.getImage(), holder.imgAnimelistImage);
-        //holder.ilt.execute();
         Picasso.with(context).load(animelist.getImage()).into(holder.imgAnimelistImage);
 
 
