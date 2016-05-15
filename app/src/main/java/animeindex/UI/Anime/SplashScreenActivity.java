@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Anime;
+package animeindex.UI.Anime;
 
 import android.content.Intent;
 import android.os.Handler;

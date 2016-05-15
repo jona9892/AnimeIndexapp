@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Animelist.Tabhost;
+package animeindex.UI.Animelist.Tabhost;
 
 import android.app.LocalActivityManager;
 import android.content.Intent;

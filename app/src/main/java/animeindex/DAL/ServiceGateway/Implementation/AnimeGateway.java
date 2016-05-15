@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import animeindex.DAL.ServiceGateway.Abstraction.IGateway;
-import animeindex.Model.Anime;
-import animeindex.Model.Genre;
+import animeindex.BE.Anime;
+import animeindex.BE.Genre;
 
 /**
  * Created by jona9892 on 09-04-2016.

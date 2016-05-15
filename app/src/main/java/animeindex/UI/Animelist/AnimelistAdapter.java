@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Animelist;
+package animeindex.UI.Animelist;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,8 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import animeindex.Controller.AsyncTasks.ImageLoadTask;
-import animeindex.Model.Animelist;
+import animeindex.BE.Animelist;
 import animeindex.R;
 
 /**

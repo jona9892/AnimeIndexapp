@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Picture;
+package animeindex.UI.Picture;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,9 +17,10 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import animeindex.BLL.BLLPicture;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCPictures;
-import animeindex.Model.Picture;
+import animeindex.BE.Picture;
 import animeindex.R;
 
 public class FullscreenActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class FullscreenActivity extends AppCompatActivity {
     Picture m_picture;
     TextView txtFSDescription;
     Button btnDelete;
-    private ICrud<Picture> pictureDb;
+    private BLLPicture bllPicture;
 
     String description;
     String title;
@@ -37,7 +38,7 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
-        pictureDb = new DALCPictures(this);
+        bllPicture = new BLLPicture(this);
         getFromIntent();
         getWidgets();
         setWidgets();
@@ -113,7 +114,15 @@ public class FullscreenActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        pictureDb.delete(m_picture.getId());
+                        bllPicture.delete(m_picture.getId());
+                        File fdelete = new File(m_picture.getFilename());
+                        if (fdelete.exists()) {
+                            if (fdelete.delete()) {
+                                System.out.println("file Deleted :" + m_picture.getFilename());
+                            } else {
+                                System.out.println("file not Deleted :" + m_picture.getFilename());
+                            }
+                        }
                         Toast.makeText(FullscreenActivity.this, "Picture is deleted",
                                 Toast.LENGTH_LONG).show();
                         finish();
@@ -172,7 +181,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 description = input.getText().toString();
                 Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), m_picture.getDate(), m_picture.getTitle(), description);
-                pictureDb.update(pic);
+                bllPicture.update(pic);
                 txtFSDescription.setText("" + description);
                 Toast.makeText(FullscreenActivity.this, "Description changed",
                         Toast.LENGTH_LONG).show();
@@ -210,7 +219,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 title = input.getText().toString();
                 Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), m_picture.getDate(), title, m_picture.getDescription());
-                pictureDb.update(pic);
+                bllPicture.update(pic);
                 txtFSTitle.setText("" + title);
                 Toast.makeText(FullscreenActivity.this, "Title changed",
                         Toast.LENGTH_LONG).show();
@@ -239,7 +248,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
         myImage.setImageURI(Uri.fromFile(f));
         myImage.setBackgroundColor(Color.WHITE);
-        myImage.setRotation(90);
+        myImage.setRotation(270);
         myImage.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 }

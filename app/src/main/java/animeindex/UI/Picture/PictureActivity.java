@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Picture;
+package animeindex.UI.Picture;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -33,17 +32,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import animeindex.Controller.Activities.Anime.AnimeSearchActivity;
-import animeindex.Controller.Activities.Animelist.AnimelistActivity;
+import animeindex.BLL.BLLPicture;
+import animeindex.UI.Anime.AnimeSearchActivity;
+import animeindex.UI.Animelist.AnimelistActivity;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCPictures;
-import animeindex.Model.Picture;
+import animeindex.BE.Picture;
 import animeindex.R;
 
 public class PictureActivity extends AppCompatActivity {
 
     private PictureAdapter pictureAdapter;
-    private ICrud<Picture> pictureDb;
+    private BLLPicture bllPicture;
     private GridView grdPictures;
     private ImageButton btnPicture;
 
@@ -62,7 +62,7 @@ public class PictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
-        pictureDb = new DALCPictures(this);
+        bllPicture = new BLLPicture(this);
         getWidgets();
         setUpButtons();
         setUpGrid();
@@ -153,7 +153,7 @@ public class PictureActivity extends AppCompatActivity {
      */
     public void onClick(GridView parent,
                         View v, int position, long id) {
-        ArrayList<Picture> col = (ArrayList<Picture>) pictureDb.readAll();
+        ArrayList<Picture> col = (ArrayList<Picture>) bllPicture.readAll();
 
         Intent intentFullscreen = new Intent();
         intentFullscreen.setClass(this, FullscreenActivity.class);
@@ -286,7 +286,7 @@ public class PictureActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 description = input.getText().toString();
                 Picture pic = new Picture(0, filename, timeStamp, title, description);
-                pictureDb.add(pic);
+                bllPicture.add(pic);
                 setAdapter();
             }
         });
@@ -307,7 +307,7 @@ public class PictureActivity extends AppCompatActivity {
      * sets the adapter, of the list view
      */
     private void setAdapter() {
-        pictureAdapter = new PictureAdapter(this, R.layout.picture_cell, (ArrayList<Picture>) pictureDb.readAll());
+        pictureAdapter = new PictureAdapter(this, R.layout.picture_cell, (ArrayList<Picture>) bllPicture.readAll());
         grdPictures.setAdapter(pictureAdapter);
     }
 
@@ -338,7 +338,7 @@ public class PictureActivity extends AppCompatActivity {
             }
             myImage.setImageURI(Uri.fromFile(f));
             myImage.setBackgroundColor(Color.WHITE);
-            myImage.setRotation(90);
+            myImage.setRotation(270);
             scaleImage(myImage);
         }
 

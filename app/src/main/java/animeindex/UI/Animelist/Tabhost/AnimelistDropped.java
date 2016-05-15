@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Animelist.Tabhost;
+package animeindex.UI.Animelist.Tabhost;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -8,11 +8,11 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import animeindex.Controller.Activities.Animelist.AnimelistAdapter;
-import animeindex.Controller.Activities.Animelist.AnimelistEditActivity;
+import animeindex.UI.Animelist.AnimelistAdapter;
+import animeindex.UI.Animelist.AnimelistEditActivity;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCAnimelist;
-import animeindex.Model.Animelist;
+import animeindex.BE.Animelist;
 import animeindex.R;
 
 public class AnimelistDropped extends ListActivity {

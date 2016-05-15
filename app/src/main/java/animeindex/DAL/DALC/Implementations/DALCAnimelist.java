@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import animeindex.DAL.DALC.Abstractions.ICrud;
-import animeindex.Model.Animelist;
+import animeindex.BE.Animelist;
 
 /**
  * Created by JonathansPC on 22-04-2016.

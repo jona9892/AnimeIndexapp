@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Anime;
+package animeindex.UI.Anime;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,17 +21,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import animeindex.Controller.Activities.Animelist.AnimelistActivity;
-import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistTabActivity;
-import animeindex.Controller.Activities.Picture.PictureActivity;
-import animeindex.DAL.ServiceGateway.Abstraction.IGateway;
+import animeindex.BLL.BLLAnime;
+import animeindex.UI.Animelist.AnimelistActivity;
+import animeindex.UI.Animelist.Tabhost.AnimelistTabActivity;
+import animeindex.UI.Picture.PictureActivity;
 import animeindex.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import animeindex.DAL.ServiceGateway.Implementation.AnimeGateway;
-import animeindex.Model.Anime;
+import animeindex.BE.Anime;
 
 public class AnimeSearchActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
     private ListView lstAnimes;
     private Boolean reverse = true;
     public static String ANIMESEARCH_TAG = "ANIME";
-    IGateway m_data;
+    BLLAnime bllAnime;
 
 
     int nextPage = 1;
@@ -52,7 +51,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anime_search);
         getWidgets();
         setAdapter();
-        m_data = new AnimeGateway();
+        bllAnime = new BLLAnime();
         setUpListViews();
 
     }
@@ -162,7 +161,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
      */
     public void onClick(ListView parent,
                         View v, int position, long id) {
-        ArrayList<Anime> col = m_data.getAll();
+        ArrayList<Anime> col = bllAnime.getAll();
         Log.d("asd", col.get(position).getTitle());
 
         Intent intent = new Intent();
@@ -191,7 +190,6 @@ public class AnimeSearchActivity extends AppCompatActivity {
         public TextView type;
         public TextView status;
         public TextView description;
-
     }
 
     /**
@@ -259,7 +257,7 @@ public class AnimeSearchActivity extends AppCompatActivity {
          */
         @Override
         protected List<Anime> doInBackground(Integer... page) {
-            return m_data.getPage(page[0]);
+            return bllAnime.getPage(page[0]);
         }
 
         /**

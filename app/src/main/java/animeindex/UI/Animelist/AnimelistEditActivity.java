@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Animelist;
+package animeindex.UI.Animelist;
 
         import android.app.Activity;
         import android.content.Intent;
@@ -17,12 +17,7 @@ package animeindex.Controller.Activities.Animelist;
 
         import java.util.ArrayList;
 
-        import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistCompleted;
-        import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistDropped;
-        import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistTabActivity;
-        import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistWatching;
-        import animeindex.Controller.AsyncTasks.ImageLoadTask;
-        import animeindex.Model.Animelist;
+        import animeindex.BE.Animelist;
         import animeindex.R;
 
 public class AnimelistEditActivity extends AppCompatActivity {
@@ -173,7 +168,6 @@ public class AnimelistEditActivity extends AppCompatActivity {
         int episodes = m_animelist.getEpisodeCount();
 
         ArrayList<Integer> result = new ArrayList<Integer>();
-
         //puts the values in the arraylist from 0 to the number of episodes the anime contains
         for (int i = 0; i <= episodes; i++) {
             result.add(i);

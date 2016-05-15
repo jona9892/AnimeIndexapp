@@ -17,15 +17,15 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Activities.Anime.AnimeSearchActivity">
+        <activity android:name=".UI.Anime.AnimeSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.Activities.Anime.AnimeInfoActivity" />
+        <activity android:name=".UI.Anime.AnimeInfoActivity" />
 
-        <activity android:name=".Controller.Activities.Animelist.AnimelistActivity" android:launchMode="singleTop">
+        <activity android:name=".UI.Animelist.AnimelistActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -34,13 +34,13 @@
         </activity>
 
 
-        <activity android:name=".Controller.Activities.Animelist.AnimelistEditActivity" />
-        <activity android:name=".Controller.Activities.Picture.PictureActivity" />
-        <activity android:name=".Controller.Activities.Picture.FullscreenActivity" />
-        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistTabActivity" />
-        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistCompleted" />
-        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistWatching" />
-        <activity android:name=".Controller.Activities.Animelist.Tabhost.AnimelistDropped" />
+        <activity android:name=".UI.Animelist.AnimelistEditActivity" />
+        <activity android:name=".UI.Picture.PictureActivity" />
+        <activity android:name=".UI.Picture.FullscreenActivity" />
+        <activity android:name=".UI.Animelist.Tabhost.AnimelistTabActivity" />
+        <activity android:name=".UI.Animelist.Tabhost.AnimelistCompleted" />
+        <activity android:name=".UI.Animelist.Tabhost.AnimelistWatching" />
+        <activity android:name=".UI.Animelist.Tabhost.AnimelistDropped" />
 
     </application>
 

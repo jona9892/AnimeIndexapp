@@ -1,4 +1,4 @@
-package animeindex.Model;
+package animeindex.BE;
 
 import java.io.Serializable;
 

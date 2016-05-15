@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Anime;
+package animeindex.UI.Anime;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,22 +6,19 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import animeindex.Controller.AsyncTasks.ImageLoadTask;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCAnimelist;
-import animeindex.Model.Anime;
-import animeindex.Model.Animelist;
-import animeindex.Model.Genre;
+import animeindex.BE.Anime;
+import animeindex.BE.Animelist;
+import animeindex.BE.Genre;
 import animeindex.R;
 
 public class AnimeInfoActivity extends AppCompatActivity {

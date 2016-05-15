@@ -1,9 +1,7 @@
-package animeindex.Controller.Activities.Animelist;
+package animeindex.UI.Animelist;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import animeindex.Controller.AsyncTasks.ImageLoadTask;
 
 /**
  * Created by JonathansPC on 28-04-2016.

@@ -1,4 +1,4 @@
-package animeindex.Controller.Activities.Animelist;
+package animeindex.UI.Animelist;
 
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
@@ -20,19 +20,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import animeindex.Controller.Activities.Anime.AnimeSearchActivity;
-import animeindex.Controller.Activities.Animelist.Tabhost.AnimelistTabActivity;
-import animeindex.Controller.Activities.Picture.PictureActivity;
+import animeindex.BLL.BLLAnimelist;
+import animeindex.UI.Anime.AnimeSearchActivity;
+import animeindex.UI.Animelist.Tabhost.AnimelistTabActivity;
+import animeindex.UI.Picture.PictureActivity;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCAnimelist;
-import animeindex.Model.Animelist;
+import animeindex.BE.Animelist;
 import animeindex.R;
 
 public class AnimelistActivity extends AppCompatActivity {
     //-------------------------Variables-----------------------
     private AnimelistAdapter listAdapter;
     private ListView lstAnimelist;
-    private ICrud<Animelist> animelistDB;
+    private BLLAnimelist bllAnimelist;
     private SearchView searchView;
     private Boolean reverse = false;
     private Boolean changeGroup = false;
@@ -54,7 +55,6 @@ public class AnimelistActivity extends AppCompatActivity {
     private ArrayList<Animelist> droppedArray = new ArrayList<>();
     private ArrayList<Animelist> unholdArray = new ArrayList<>();
     private ArrayList<Animelist> planToWatchArray = new ArrayList<>();
-    private ArrayList<Animelist> filteredAnimes = new ArrayList<>();
     //--------------------ANIMESEARCH_TAG - RequestCode-------------------------
     private final int EDIT_REQUEST_CODE = 1;
     public static String ANIMELIST_TAG = "ANIMELIST";
@@ -63,7 +63,7 @@ public class AnimelistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animelist);
-        animelistDB = new DALCAnimelist(this);
+        bllAnimelist = new BLLAnimelist(this);
 
         getWidgets();
         setAdapter();
@@ -275,7 +275,7 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method should be called when the array adapter and listview needs to be updated
      */
     public void setAdapter(){
-        animelistArray = (ArrayList<Animelist>)animelistDB.readAll();
+        animelistArray = (ArrayList<Animelist>) bllAnimelist.readAll();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, animelistArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -335,35 +335,35 @@ public class AnimelistActivity extends AppCompatActivity {
         droppedArray.clear();
         planToWatchArray.clear();
         //Fill array with the animelist objects that contains a status: completed
-        for(Animelist animel : animelistDB.readAll()){
+        for(Animelist animel : bllAnimelist.readAll()){
             if(animel.getStatus().equals("Completed")){
                 completedArray.add(animel);
             }
         }
 
         //Fill array with the animelist objects that contains a status: watching
-        for(Animelist animel : animelistDB.readAll()) {
+        for(Animelist animel : bllAnimelist.readAll()) {
             if (animel.getStatus().equals("Watching")) {
                 watchingArray.add(animel);
             }
         }
 
         //Fill array with the animelist objects that contains a status: unhold
-        for(Animelist animel : animelistDB.readAll()) {
+        for(Animelist animel : bllAnimelist.readAll()) {
                if (animel.getStatus().equals("Unhold")) {
                     unholdArray.add(animel);
                }
         }
 
         //Fill array with the animelist objects that contains a status: dropped
-        for(Animelist animel : animelistDB.readAll()) {
+        for(Animelist animel : bllAnimelist.readAll()) {
             if (animel.getStatus().equals("Dropped")) {
                 droppedArray.add(animel);
             }
         }
 
         //Fill array with the animelist objects that contains a status: dropped
-        for(Animelist animel : animelistDB.readAll()) {
+        for(Animelist animel : bllAnimelist.readAll()) {
             if (animel.getStatus().equals("Plan to watch")) {
                 planToWatchArray.add(animel);
             }
@@ -418,7 +418,7 @@ public class AnimelistActivity extends AppCompatActivity {
      * @param alist the animelist object to be edited
      */
     private void editAnimelist(Animelist alist) {
-        animelistDB.update(alist);
+        bllAnimelist.update(alist);
         Toast.makeText(this, alist.getTitle()+" is updated",
                 Toast.LENGTH_LONG).show();
     }

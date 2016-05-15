@@ -1,4 +1,4 @@
-package animeindex.Controller.AsyncTasks;
+package animeindex.UI;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
