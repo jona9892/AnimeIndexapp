@@ -107,38 +107,40 @@ public class FullscreenActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(FullscreenActivity.this);
-                builder.setTitle("Are you sure, you wanna delete this picture?");
-                // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        bllPicture.delete(m_picture.getId());
-                        File fdelete = new File(m_picture.getFilename());
-                        if (fdelete.exists()) {
-                            if (fdelete.delete()) {
-                                System.out.println("file Deleted :" + m_picture.getFilename());
-                            } else {
-                                System.out.println("file not Deleted :" + m_picture.getFilename());
-                            }
-                        }
-                        Toast.makeText(FullscreenActivity.this, "Picture is deleted",
-                                Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                builder.show();
-
+                deletePicture();
             }
         });
+    }
+
+    private void deletePicture() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FullscreenActivity.this);
+        builder.setTitle("Are you sure, you wanna delete this picture?");
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                bllPicture.delete(m_picture.getId());
+                File fdelete = new File(m_picture.getFilename());
+                if (fdelete.exists()) {
+                    if (fdelete.delete()) {
+                        System.out.println("file Deleted :" + m_picture.getFilename());
+                    } else {
+                        System.out.println("file not Deleted :" + m_picture.getFilename());
+                    }
+                }
+                Toast.makeText(FullscreenActivity.this, "Picture is deleted",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     /**
@@ -180,7 +182,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 description = input.getText().toString();
-                Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), m_picture.getDate(), m_picture.getTitle(), description);
+                Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), m_picture.getTitle(), description);
                 bllPicture.update(pic);
                 txtFSDescription.setText("" + description);
                 Toast.makeText(FullscreenActivity.this, "Description changed",
@@ -218,7 +220,7 @@ public class FullscreenActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 title = input.getText().toString();
-                Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), m_picture.getDate(), title, m_picture.getDescription());
+                Picture pic = new Picture(m_picture.getId(), m_picture.getFilename(), title, m_picture.getDescription());
                 bllPicture.update(pic);
                 txtFSTitle.setText("" + title);
                 Toast.makeText(FullscreenActivity.this, "Title changed",
@@ -240,7 +242,7 @@ public class FullscreenActivity extends AppCompatActivity {
      * @param filename the file
      * @param myImage the imageview
      */
-    private void showInFullscreen(String filename, ImageView myImage) {
+    public void showInFullscreen(String filename, ImageView myImage) {
 
         File f = new File(filename);
         if (!f.exists()) {
@@ -248,7 +250,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
         myImage.setImageURI(Uri.fromFile(f));
         myImage.setBackgroundColor(Color.WHITE);
-        myImage.setRotation(270);
+        myImage.setRotation(90);
         myImage.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 }

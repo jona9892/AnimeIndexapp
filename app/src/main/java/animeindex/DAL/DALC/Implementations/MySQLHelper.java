@@ -26,7 +26,7 @@ public class MySQLHelper extends SQLiteOpenHelper {
                 " status TEXT, episodesSeen INTEGER, rating INTEGER)");
 
         db.execSQL("CREATE TABLE " + TABLE_PICTURES
-                + "(id INTEGER PRIMARY KEY, filename TEXT, date TEXT, title TEXT, description TEXT)");
+                + "(id INTEGER PRIMARY KEY, filename TEXT, title TEXT, description TEXT)");
     }
 
     @Override

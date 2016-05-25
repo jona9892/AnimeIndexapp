@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import animeindex.BLL.BLLAnimelist;
 import animeindex.DAL.DALC.Abstractions.ICrud;
 import animeindex.DAL.DALC.Implementations.DALCAnimelist;
 import animeindex.BE.Anime;
@@ -37,14 +38,14 @@ public class AnimeInfoActivity extends AppCompatActivity {
 
     //--------------------Variables---------------------------
     private Anime m_anime;
-    private ICrud<Animelist> animelistDB;
+    private BLLAnimelist bllAnimelist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_info);
         m_anime = new Anime();
-        animelistDB = new DALCAnimelist(this);
+        bllAnimelist = new BLLAnimelist(this);
         getWidgets();
 
         getFromIntent();
@@ -125,7 +126,7 @@ public class AnimeInfoActivity extends AppCompatActivity {
         int rating = 1;
 
         Animelist animelist = new Animelist(0,title, type, episodeCount, image, status, episodesSeen, rating);
-        animelistDB.add(animelist);
+        bllAnimelist.add(animelist);
         Log.d("AnimeInfoActivity", "Anime succesfully added to list");
 
         Toast.makeText(this, animelist.getTitle()+" succesfully added",
@@ -133,8 +134,12 @@ public class AnimeInfoActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method checks whether the clicked anime is in the animelist
+     * @return
+     */
     private boolean checkAnime(){
-        for(Animelist al : animelistDB.readAll()){
+        for(Animelist al : bllAnimelist.readAll()){
             if(al.getTitle().equals(m_anime.getTitle())){
                 Toast.makeText(this, al.getTitle()+ " is already in your list",
                         Toast.LENGTH_LONG).show();
@@ -174,8 +179,8 @@ public class AnimeInfoActivity extends AppCompatActivity {
         //Dynamically add new textview for every genre in anime object
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        TextView tv;
 
+        TextView tv;
         for(Genre g : m_anime.getGenre()){
             tv = new TextView(this);
             tv.setLayoutParams(params);

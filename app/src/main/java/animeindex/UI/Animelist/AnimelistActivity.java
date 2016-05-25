@@ -87,9 +87,7 @@ public class AnimelistActivity extends AppCompatActivity {
             case EDIT_REQUEST_CODE:
                 if(resultCode == RESULT_OK) {
                     editAnimelist((Animelist) data.getSerializableExtra(ANIMELIST_TAG));
-                    setAdapter();
-                    fillArrays();
-                    setTextViews();
+                    refresh();
                     rdbAll.setChecked(true);
                 }
                 break;
@@ -109,15 +107,12 @@ public class AnimelistActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 listAdapter.getFilter().filter(newText);
-
                 return true;
             }
         });
@@ -193,12 +188,21 @@ public class AnimelistActivity extends AppCompatActivity {
     }
 
     /**
+     * This method gets the current activty, closes it and start it again
+     */
+    public void refresh(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    /**
      * This method is called from the cml file - Onclick on radiobuttons
      * This method will check if a radiobutton is selected, and set a new adapter populate the listview
      * @param view the radiobutton
      */
     public void setUpRadioButtons(View view){
-
+        //checks
         boolean checked = ((RadioButton) view).isChecked();
         switch(view.getId()){
             case R.id.rdbAll:
@@ -284,7 +288,6 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method will clear the array, and populate the listview with the array of completed
      */
     public void setCompletedAdapter(){
-        completedArray.clear();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, completedArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -293,7 +296,6 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method will clear the array, and populate the listview with the array of watching
      */
     public void setWatchingAdapter(){
-        watchingArray.clear();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, watchingArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -302,7 +304,6 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method will clear the array, and populate the listview with the array of dropped
      */
     public void setDroppedAdapter(){
-        droppedArray.clear();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, droppedArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -311,7 +312,6 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method will clear the array, and populate the listview with the array of unhold
      */
     public void setUnholdAdapter(){
-        unholdArray.clear();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, unholdArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -320,7 +320,6 @@ public class AnimelistActivity extends AppCompatActivity {
      * This method will clear the array, and populate the listview with the array of plan to watch
      */
     public void setPlanToWatchAdapter(){
-        planToWatchArray.clear();
         listAdapter = new AnimelistAdapter(this, R.layout.animelist_cell, planToWatchArray);
         lstAnimelist.setAdapter(listAdapter);
     }
@@ -334,37 +333,17 @@ public class AnimelistActivity extends AppCompatActivity {
         unholdArray.clear();
         droppedArray.clear();
         planToWatchArray.clear();
-        //Fill array with the animelist objects that contains a status: completed
+        //Fill array with the animelist objects that contains a the specified status
         for(Animelist animel : bllAnimelist.readAll()){
             if(animel.getStatus().equals("Completed")){
                 completedArray.add(animel);
-            }
-        }
-
-        //Fill array with the animelist objects that contains a status: watching
-        for(Animelist animel : bllAnimelist.readAll()) {
-            if (animel.getStatus().equals("Watching")) {
+            } else if (animel.getStatus().equals("Watching")) {
                 watchingArray.add(animel);
-            }
-        }
-
-        //Fill array with the animelist objects that contains a status: unhold
-        for(Animelist animel : bllAnimelist.readAll()) {
-               if (animel.getStatus().equals("Unhold")) {
-                    unholdArray.add(animel);
-               }
-        }
-
-        //Fill array with the animelist objects that contains a status: dropped
-        for(Animelist animel : bllAnimelist.readAll()) {
-            if (animel.getStatus().equals("Dropped")) {
+            } else if (animel.getStatus().equals("Unhold")) {
+                unholdArray.add(animel);
+            } else if (animel.getStatus().equals("Dropped")) {
                 droppedArray.add(animel);
-            }
-        }
-
-        //Fill array with the animelist objects that contains a status: dropped
-        for(Animelist animel : bllAnimelist.readAll()) {
-            if (animel.getStatus().equals("Plan to watch")) {
+            } else if (animel.getStatus().equals("Plan to watch")) {
                 planToWatchArray.add(animel);
             }
         }
@@ -434,7 +413,6 @@ public class AnimelistActivity extends AppCompatActivity {
      */
     public void onClick(ListView parent,
                         View v, int position, long id, ArrayList<Animelist> arrayType) {
-
         ArrayList<Animelist> col = arrayType;
         Intent intent = new Intent();
         intent.setClass(this, AnimelistEditActivity.class);

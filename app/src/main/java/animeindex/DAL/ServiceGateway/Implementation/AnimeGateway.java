@@ -38,7 +38,7 @@ public class AnimeGateway implements IGateway<Anime> {
      */
     public ArrayList<Anime> getPage(int idx) {
         try {
-            String URL = "http://192.168.0.19:9000/api/animes";
+            String URL = "http://animeindex-jonathangjoel.rhcloud.com//api/animes";
 
             String url = URL + "?" + "limit=" + m_limit + "&page=" + idx;
             String result = getContent(url);

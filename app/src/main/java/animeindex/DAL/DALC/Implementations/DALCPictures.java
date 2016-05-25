@@ -22,7 +22,7 @@ public class DALCPictures implements ICrud<Picture> {
     private SQLiteDatabase db;
     private SQLiteStatement insertStmt;
     private static final String INSERT = "insert into " + MySQLHelper.TABLE_PICTURES
-            + "(filename, date, title, description) values (?,?,?,?)";
+            + "(filename, title, description) values (?,?,?)";
 
     public DALCPictures(Context context) {
         this.context = context;
@@ -39,9 +39,8 @@ public class DALCPictures implements ICrud<Picture> {
     @Override
     public Picture add(Picture item) {
         this.insertStmt.bindString(1, item.getFilename());
-        this.insertStmt.bindString(2, item.getDate());
-        this.insertStmt.bindString(3, item.getTitle());
-        this.insertStmt.bindString(4, item.getDescription());
+        this.insertStmt.bindString(2, item.getTitle());
+        this.insertStmt.bindString(3, item.getDescription());
 
         item.setId((int) insertStmt.executeInsert());
         return item;
@@ -55,11 +54,11 @@ public class DALCPictures implements ICrud<Picture> {
     @Override
     public Picture read(int id) {
         List<Picture> list = new ArrayList<Picture>();
-        Cursor cursor = db.query(MySQLHelper.TABLE_PICTURES, new String[] { "Id", "filename", "date", "title", "description"},
+        Cursor cursor = db.query(MySQLHelper.TABLE_PICTURES, new String[] { "Id", "filename", "title", "description"},
                 "id = " + id, null, null, null, "title asc");
         if (cursor.moveToFirst()) {
             do {
-                list.add(new Picture(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                list.add(new Picture(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -76,11 +75,11 @@ public class DALCPictures implements ICrud<Picture> {
     @Override
     public Collection<Picture> readAll() {
         List<Picture> list = new ArrayList<Picture>();
-        Cursor cursor = db.query(MySQLHelper.TABLE_PICTURES, new String[] { "Id", "filename", "date", "title", "description"},
+        Cursor cursor = db.query(MySQLHelper.TABLE_PICTURES, new String[] { "Id", "filename", "title", "description"},
                 null, null, null, null, "title asc");
         if (cursor.moveToFirst()) {
             do {
-                list.add(new Picture(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                list.add(new Picture(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)));
             } while (cursor.moveToNext());
         }
         if (cursor != null && !cursor.isClosed()) {
@@ -103,7 +102,6 @@ public class DALCPictures implements ICrud<Picture> {
     public Picture update(Picture item) {
         ContentValues cv = new ContentValues();
         cv.put("filename", item.getFilename());
-        cv.put("date", item.getDate());
         cv.put("title", item.getTitle());
         cv.put("description", item.getDescription());
         db.update(MySQLHelper.TABLE_PICTURES, cv, "id=" + item.getId(), null);

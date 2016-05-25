@@ -18,6 +18,7 @@ package animeindex.UI.Animelist;
         import java.util.ArrayList;
 
         import animeindex.BE.Animelist;
+        import animeindex.BLL.BLLAnimelist;
         import animeindex.R;
 
 public class AnimelistEditActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class AnimelistEditActivity extends AppCompatActivity {
     private ImageView imgEditImage;
     //-----------Variables-------------------------
     private Animelist m_animelist;
+    private BLLAnimelist bllAnimelist;
     //---------------------------------------------
  
 
@@ -40,6 +42,7 @@ public class AnimelistEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animelist_edit);
+        bllAnimelist = new BLLAnimelist(this);
         getFromIntent();
         getWidgets();
         setUpSpinners();
@@ -70,7 +73,6 @@ public class AnimelistEditActivity extends AppCompatActivity {
      */
     public void getFromIntent(){
         //obtain  Intent Object send  from SenderActivity
-        Intent intent = this.getIntent();
         m_animelist = (Animelist) getIntent().getSerializableExtra((AnimelistActivity.ANIMELIST_TAG));
     }
 
@@ -154,26 +156,12 @@ public class AnimelistEditActivity extends AppCompatActivity {
         spnRating.setSelection(compareRating-1);
         //-----------------------------------Episodes seen Spinner-----------------------------------
         int compareEpisode = m_animelist.getEpisodesSeen();
-        ArrayList<Integer> episodes = getEpisodes();
+        ArrayList<Integer> episodes = bllAnimelist.getEpisodes(m_animelist);
         ArrayAdapter<Integer> adapterEpisode = new ArrayAdapter<Integer>(this, R.layout.spinner_layout, episodes);
         spnEpisodesSeen.setAdapter(adapterEpisode);
         spnEpisodesSeen.setSelection(compareEpisode);
     }
 
-    /**
-     * This method sets an arraylist with integers, to use for the episodes spinner
-     * @return Arraylist with integers
-     */
-    private ArrayList<Integer> getEpisodes() {
-        int episodes = m_animelist.getEpisodeCount();
-
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        //puts the values in the arraylist from 0 to the number of episodes the anime contains
-        for (int i = 0; i <= episodes; i++) {
-            result.add(i);
-        }
-        return result;
-    }
 
     /**
      * This method is used edit an animelist object.

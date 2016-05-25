@@ -37,6 +37,18 @@ public class AnimelistAdapter extends ArrayAdapter<Animelist> implements Filtera
         animeFilter = new AnimeFilter();
     }
 
+    public static class ViewHolderAnimelist {
+        TextView txtAnimelistTitle;
+        TextView txtAnimelistType;
+        TextView txtNumber;
+        TextView txtAnimelistStatus;
+
+        TextView txtAnimelistEpisodesSeen;
+        TextView txtAnimelistEpisodeCount;
+        TextView txtAnimelistRating;
+        ImageView imgAnimelistImage;
+    }
+
     /**
      * Gets the number of object in the filtered arraylist
      */
